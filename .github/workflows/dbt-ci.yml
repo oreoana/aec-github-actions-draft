@@ -1,9 +1,15 @@
-name: Run dbt on BigQuery
+name: Run dbt test suite on PRs
 
 on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
   push:
     branches:
-      - main  # Replace with your branch name
+      - '!main'
 
 jobs:
   build:
@@ -14,21 +20,30 @@ jobs:
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout PR code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}  # Checkout the specific commit of the pull request
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x  # Choose the Python version you need
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Choose the Python version you need
 
-    - name: Install dbt
-      run: |
-        pip install dbt-bigquery
-        dbt --version
+      - name: Install dbt
+        run: |
+          pip install dbt-bigquery
+          dbt --version
 
-    - name: Set up GCP credentials and run dbt
-      run: |
-        echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > gcp-credentials.json
-        gcloud auth activate-service-account --key-file=gcp-credentials.json --project="$GCP_PROJECT_ID"
-        dbt run
+      - name: Set up GCP credentials and run dbt
+        run: |
+          echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > gcp-credentials.json
+          gcloud auth activate-service-account --key-file=gcp-credentials.json --project="$GCP_PROJECT_ID"
+      
+      - name: Run dbt
+        run: |
+          dbt run
+      
+      - name: Run dbt test suite
+        run: |
+          dbt test
