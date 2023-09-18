@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GCP_PROJECT_ID: your-project-id  # Replace with your Google Cloud Project ID
+      GCP_PROJECT_ID: aec-students  # Replace with your Google Cloud Project ID
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
 
     steps:
