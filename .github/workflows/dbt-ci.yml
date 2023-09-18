@@ -24,7 +24,7 @@ jobs:
 
     - name: Install dbt
       run: |
-        pip install dbt
+        pip install dbt-bigquery
         dbt --version
 
     - name: Set up GCP credentials and run dbt
