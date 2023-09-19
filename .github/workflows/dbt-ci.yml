@@ -35,13 +35,13 @@ jobs:
           pip install dbt-bigquery
           dbt --version
 
-      - name: dbt debug
-        run: dbt debug --profiles-dir $PWD
-
-      - name: Set up GCP credentials and run dbt
+      - name: Set up GCP credentials
         run: |
           echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > gcp-credentials.json
           gcloud auth activate-service-account --key-file=gcp-credentials.json --project="$GCP_PROJECT_ID"
+      
+      - name: dbt debug
+        run: dbt debug --profiles-dir $PWD
       
       - name: Run dbt packages
         run: dbt deps
