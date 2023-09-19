@@ -93,3 +93,15 @@ Happy modeling!
 [0m22:36:11.262435 [debug] [MainThread]: Connection 'debug' was properly closed.
 [0m22:36:11.262812 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ffa658aed40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ffa6229d480>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ffa6229cfd0>]}
 [0m22:36:11.263236 [debug] [MainThread]: Flushing usage events
+[0m19:15:20.487325 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f13803aad40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f137fba1bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f137f463eb0>]}
+
+
+============================== 19:15:20.499781 | 01261cea-2cbc-447b-bdca-dd013347be27 ==============================
+[0m19:15:20.499781 [info ] [MainThread]: Running with dbt=1.6.2
+[0m19:15:20.501429 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'fail_fast': 'False', 'log_path': 'logs', 'profiles_dir': '/home/vscode/.dbt', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'static_parser': 'True', 'invocation_command': 'dbt debug --config-dir', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m19:15:20.502430 [info ] [MainThread]: To view your profiles.yml file, run:
+
+xdg-open /home/vscode/.dbt
+[0m19:15:20.503579 [debug] [MainThread]: Command `dbt debug` succeeded at 19:15:20.503412 after 0.06 seconds
+[0m19:15:20.504343 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f13803aad40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f137f458550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f137f458250>]}
+[0m19:15:20.505174 [debug] [MainThread]: Flushing usage events
