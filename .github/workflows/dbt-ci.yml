@@ -41,10 +41,10 @@ jobs:
           gcloud auth activate-service-account --key-file=gcp-credentials.json --project="$GCP_PROJECT_ID"
       
       - name: dbt debug
-        run: dbt debug --profile-dir ~/.dbt
+        run: dbt debug --profiles-dir ~/.dbt
       
       - name: Run dbt packages
-        run: dbt deps --profile-dir ~/.dbt
+        run: dbt deps --profiles-dir ~/.dbt
 
       - name: Run dbt
-        run: dbt run --profile-dir ~/.dbt
+        run: dbt run --profiles-dir ~/.dbt
