@@ -17,6 +17,7 @@ jobs:
 
     env:
       DBT_PROFILES_DIR: ./coffee_shop_oriana  # Specify the location of the profiles.yml file
+      DBT_PROJECT_DIR: ./coffee_shop_oriana
       BIGQUERY_PROJECT_ID: aec-students  # Replace with your Google Cloud Project ID
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
 
@@ -45,4 +46,4 @@ jobs:
 
       - name: Run dbt
         run: |
-          dbt run --profiles-dir "$DBT_PROFILES_DIR" --target dev  # Adjust target as needed
+          dbt run --profiles-dir "$DBT_PROFILES_DIR" --target dev --project-dir "$DBT_PROJECT_DIR"
