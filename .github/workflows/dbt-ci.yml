@@ -16,7 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GCP_PROJECT_ID: aec-students  # Replace with your Google Cloud Project ID
+      DBT_PROFILES_DIR: ~/coffee_shop_oriana  # Specify the location of the profiles.yml file
+      BIGQUERY_PROJECT_ID: aec-students  # Replace with your Google Cloud Project ID
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
 
     steps:
@@ -30,21 +31,18 @@ jobs:
         with:
           python-version: 3.x  # Choose the Python version you need
 
-      - name: Install dbt
+      - name: Create GCP keyfile JSON
+        run: |
+          echo "${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}" > gcp-credentials.json
+          echo "$DBT_PROFILES_DIR"
+          echo "$PWD"
+          mv gcp-credentials.json "$DBT_PROFILES_DIR"  # Move the keyfile to the profiles directory
+
+      - name: Install dbt-bigquery
         run: |
           pip install dbt-bigquery
           dbt --version
 
-      - name: Set up GCP credentials
-        run: |
-          echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > gcp-credentials.json
-          gcloud auth activate-service-account --key-file=gcp-credentials.json --project="$GCP_PROJECT_ID"
-      
-      - name: dbt debug
-        run: dbt debug --profiles-dir ~/.dbt
-      
-      - name: Run dbt packages
-        run: dbt deps --profiles-dir ~/.dbt
-
       - name: Run dbt
-        run: dbt run --profiles-dir ~/.dbt
+        run: |
+          dbt run --profiles-dir "$DBT_PROFILES_DIR" --target dev  # Adjust target as needed

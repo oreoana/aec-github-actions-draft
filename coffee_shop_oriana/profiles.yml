@@ -1,0 +1,10 @@
+coffee_shop_oriana:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: aec-students
+      dataset: dbt_{{ env_var('user') }}
+      threads: 8
+      keyfile: ./gcp-credentials.json
