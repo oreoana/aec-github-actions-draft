@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DBT_PROFILES_DIR: ~/coffee_shop_oriana  # Specify the location of the profiles.yml file
+      DBT_PROFILES_DIR: ./coffee_shop_oriana  # Specify the location of the profiles.yml file
       BIGQUERY_PROJECT_ID: aec-students  # Replace with your Google Cloud Project ID
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
 
