@@ -5,6 +5,6 @@ coffee_shop_oriana:
       type: bigquery
       method: service-account
       project: aec-students
-      dataset: dbt_{{ env_var('user') }}
+      dataset: dbt_oriana
       threads: 8
       keyfile: ./gcp-credentials.json
