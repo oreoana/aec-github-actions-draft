@@ -17,4 +17,4 @@ coffee_shop:
       project: aec-students
       dataset: dbt_oriana
       threads: 8
-      keyfile: ./coffee_shop_oriana/gcp-credentials.json
+      keyfile: ./coffee_shop/gcp-credentials.json
