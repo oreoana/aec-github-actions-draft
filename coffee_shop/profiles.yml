@@ -15,6 +15,6 @@ coffee_shop:
       type: bigquery
       method: service-account
       project: aec-students
-      dataset: dbt_oriana
+      dataset: dbt_oriana_ci
       threads: 8
       keyfile: ./coffee_shop/gcp-credentials.json

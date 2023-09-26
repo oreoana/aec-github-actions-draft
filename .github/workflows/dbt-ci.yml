@@ -20,7 +20,7 @@ jobs:
       DBT_PROJECT_DIR: ./coffee_shop
       BIGQUERY_PROJECT_ID: aec-students  # Replace with your Google Cloud Project ID
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
-
+      
     steps:
       - name: Checkout PR code
         uses: actions/checkout@v2
