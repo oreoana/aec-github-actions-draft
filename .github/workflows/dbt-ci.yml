@@ -44,6 +44,6 @@ jobs:
           pip install dbt-bigquery
           dbt debug --target ci
 
-      # - name: Run dbt
-      #   run: |
-      #     dbt run --profiles-dir "$DBT_PROFILES_DIR" --target ci --project-dir "$DBT_PROJECT_DIR"
+      - name: Run dbt
+        run: |
+          dbt run --profiles-dir "$DBT_PROFILES_DIR" --target ci --project-dir "$DBT_PROJECT_DIR"
