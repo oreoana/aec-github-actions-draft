@@ -1,34 +1,49 @@
-name: Run dbt on BigQuery
+name: Run dbt test suite on PRs
 
 on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
   push:
     branches:
-      - main  # Replace with your branch name
+      - '!main'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     env:
-      GCP_PROJECT_ID: aec-students  # Replace with your Google Cloud Project ID
+      DBT_PROFILES_DIR: ./coffee_shop  # Specify the location of the profiles.yml file
+      DBT_PROJECT_DIR: ./coffee_shop
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
-
+      
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout PR code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}  # Checkout the specific commit of the pull request
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x  # Choose the Python version you need
+      - name: Create GCP keyfile JSON
+        run: |
+          echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > gcp-credentials.json
+          echo "account key length: ${#BIGQUERY_SERVICE_ACCOUNT_KEY}"
+          echo $DBT_PROFILES_DIR
+          echo $PWD
+          mv gcp-credentials.json $DBT_PROFILES_DIR  # Move the keyfile to the profiles directory
 
-    - name: Install dbt
-      run: |
-        pip install dbt-bigquery
-        dbt --version
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Choose the Python version you need
 
-    - name: Set up GCP credentials and run dbt
-      run: |
-        echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > gcp-credentials.json
-        gcloud auth activate-service-account --key-file=gcp-credentials.json --project="$GCP_PROJECT_ID"
-        dbt run
+      - name: Install dbt-bigquery
+        run: |
+          pip install dbt-bigquery
+          dbt debug --target ci
+
+      - name: Run dbt
+        run: |
+          dbt run --profiles-dir "$DBT_PROFILES_DIR" --target ci --project-dir "$DBT_PROJECT_DIR"
