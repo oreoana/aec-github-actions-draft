@@ -22,26 +22,44 @@ jobs:
       
     steps:
       - name: Checkout PR code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}  # Checkout the specific commit of the pull request
-
-      - name: Create GCP keyfile JSON
-        run: |
-          echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > gcp-credentials.json
-          echo "account key length: ${#BIGQUERY_SERVICE_ACCOUNT_KEY}"
-          echo $DBT_PROFILES_DIR
-          echo $PWD
-          mv gcp-credentials.json $DBT_PROFILES_DIR  # Move the keyfile to the profiles directory
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.x  # Choose the Python version you need
+          python-version: 3.11  # Choose the Python version you need
 
       - name: Install dbt-bigquery
         run: |
           pip install dbt-bigquery
+      
+
+      - name: Create GCP keyfile JSON
+        run: |
+          echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > $DBT_PROFILES_DIR/gcp-credentials.json
+          echo "account key length: ${#BIGQUERY_SERVICE_ACCOUNT_KEY}"
+          echo $DBT_PROFILES_DIR
+
+      - name: Configure dbt Profile
+        run: |
+          echo "
+          coffee_shop:
+            target: ci
+            outputs:
+              ci:
+                type: bigquery
+                method: service-account
+                keyfile: $DBT_PROFILES_DIR/gcp-credentials.json
+                project: aec-students
+                dataset: dbt_oriana_ga_ci
+                threads: 4
+                timeout_seconds: 300
+          " > $DBT_PROFILES_DIR/profiles.yml
+
+      - name: Debug target profile
+        run: |
           dbt debug --target ci
 
       - name: Run dbt
