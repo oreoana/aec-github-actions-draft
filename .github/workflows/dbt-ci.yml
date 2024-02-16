@@ -18,6 +18,7 @@ jobs:
     env:
       DBT_PROFILES_DIR: ./coffee_shop  # Specify the location of the profiles.yml file
       DBT_PROJECT_DIR: ./coffee_shop
+      BIGQUERY_PROJECT_ID: ${{ secrets.BIGQUERY_PROJECT_ID }}
       BIGQUERY_SERVICE_ACCOUNT_KEY: ${{ secrets.BIGQUERY_SERVICE_ACCOUNT_KEY }}
       
     steps:
@@ -35,13 +36,11 @@ jobs:
         run: |
           pip install dbt-bigquery
       
-
       - name: Create GCP keyfile JSON
         run: |
           echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > $DBT_PROFILES_DIR/gcp-credentials.json
           echo "account key length: ${#BIGQUERY_SERVICE_ACCOUNT_KEY}"
-          echo $DBT_PROFILES_DIR
-
+          
       - name: Configure dbt Profile
         run: |
           echo "
@@ -52,7 +51,7 @@ jobs:
                 type: bigquery
                 method: service-account
                 keyfile: $DBT_PROFILES_DIR/gcp-credentials.json
-                project: aec-students
+                project: $DBT_PROJECT_DIR
                 dataset: dbt_oriana_ga_ci
                 threads: 4
                 timeout_seconds: 300
