@@ -14,14 +14,11 @@
 		"ghcr.io/devcontainers-contrib/features/act:1": {}
 	},
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "git clone https://github.com/aec-self-study/aec-dotfiles /home/vscode/temp && chmod a=rwx -R /home/vscode/temp && mv /home/vscode/temp/.bash_profile /home/vscode/temp/.bashrc /home/vscode/temp/.gitconfig /home/vscode/temp/.git-completion.bash /home/vscode/ && rm -rf /home/vscode/temp"
+	"postCreateCommand": "git clone https://github.com/aec-self-study/aec-dotfiles /home/vscode/temp && chmod a=rwx -R /home/vscode/temp && mv /home/vscode/temp/.bash_profile /home/vscode/temp/.bashrc /home/vscode/temp/.gitconfig /home/vscode/temp/.git-completion.bash /home/vscode/ && rm -rf /home/vscode/temp && python3 -m venv .venv && source .venv/bin/activate"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
