@@ -51,7 +51,7 @@ jobs:
                 type: bigquery
                 method: service-account
                 keyfile: $DBT_PROFILES_DIR/gcp-credentials.json
-                project: $DBT_PROJECT_DIR
+                project: $BIGQUERY_PROJECT_ID
                 dataset: dbt_oriana_ga_ci
                 threads: 4
                 timeout_seconds: 300
