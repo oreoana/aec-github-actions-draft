@@ -1,0 +1,1 @@
+{"_invocation_id": "5ba2a8e1-6188-4239-b0c4-0e16ab7dd072", "linked": {"0": {"name": "model.coffee_shop.customers", "type": "model", "succ": [1, 2]}, "1": {"name": "test.coffee_shop.unique_customers_customer_id.c5af1ff4b1", "type": "test"}, "2": {"name": "test.coffee_shop.not_null_customers_customer_id.5c9bf9911d", "type": "test"}}}
