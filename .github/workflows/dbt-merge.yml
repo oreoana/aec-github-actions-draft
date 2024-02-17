@@ -37,7 +37,6 @@ jobs:
       - name: Create GCP keyfile JSON
         run: |
           echo "$BIGQUERY_SERVICE_ACCOUNT_KEY" > $DBT_PROFILES_DIR/gcp-credentials.json
-          echo "account key length: ${#BIGQUERY_SERVICE_ACCOUNT_KEY}"
           
       - name: Configure dbt Profile
         run: |
@@ -70,4 +69,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: "$DBT_PROJECT_DIR"/target
+          publish_dir: ${{ env.DBT_PROJECT_DIR }}/target
